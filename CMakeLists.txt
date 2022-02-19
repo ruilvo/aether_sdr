@@ -8,26 +8,41 @@ project(
 # Options --------------------------------------------------------------------------------
 
 option(AETHER_DEVELOPER_MODE "Enable developer helpers" OFF)
+option(AETHER_USE_LTO "Enable link-time optimization when possible" ON)
+option(AETHER_USE_FAST_MATH "Use fast math when possible (-ffast-math or /fp:fast)" ON)
+option(AETHER_USE_HIGH_SIMD
+       "Use agressive architecture options (-march=skylake or /arch:AVX2)" ON)
+option(AETHER_BUILD_EXPLORER "Build AetherExplorer (requires Qt>6)" OFF)
+option(ATHER_BUILD_EXTRAS "Build extra stuff (non-required external libs, etc.)" OFF)
 
 # ----------------------------------------------------------------------------------------
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
+# CMake
+include(GenerateExportHeader)
+include(CheckCXXCompilerFlag)
 # Local
 include(output_structure)
 include(install_structure)
 include(cpp_options)
-include(ipo_support)
 include(default_visibility)
-# CMake
-include(GenerateExportHeader)
+include(compiler_flags)
+include(high_simd)
+include(ipo_support)
+include(fast_math)
 
 # Developer mode options
 include(developer_mode)
 
 # Dependencies
-include(dependency_qt)
+include(dependency_openmp)
+if(AETHER_BUILD_EXPLORER)
+  include(dependency_qt)
+endif()
 
 # Projects
-add_subdirectory(aether_explorer)
 add_subdirectory(aether_dsp)
+if(AETHER_BUILD_EXPLORER)
+  add_subdirectory(aether_explorer)
+endif()

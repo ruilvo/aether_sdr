@@ -1,3 +1,5 @@
+include_guard(GLOBAL)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC OFF) # Deprecated

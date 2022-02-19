@@ -1,3 +1,5 @@
+include_guard(GLOBAL)
+
 if(NOT AETHER_DEVELOPER_MODE)
   return()
 endif()
@@ -30,7 +32,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # database.
 if(("${CMAKE_GENERATOR}" MATCHES "Make") OR ("${CMAKE_GENERATOR}" MATCHES "Ninja$"))
   add_custom_target(
-    "aether_sdr-ccc" ALL
-    ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_BINARY_DIR}/compile_commands.json
-    ${CMAKE_SOURCE_DIR})
+    "aether_sdr-ccc" ALL ${CMAKE_COMMAND} -E copy_if_different
+                         ${CMAKE_BINARY_DIR}/compile_commands.json ${CMAKE_SOURCE_DIR})
 endif()

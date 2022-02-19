@@ -1,3 +1,5 @@
+include_guard(GLOBAL)
+
 # Set an output structure
 # The `$<1:>"` are a hack. Why? Because in:
 # https://cmake.org/cmake/help/latest/prop_tgt/LIBRARY_OUTPUT_DIRECTORY.html

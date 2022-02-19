@@ -1,3 +1,5 @@
+include_guard(GLOBAL)
+
 # Enable standard C++ 17 globally
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
