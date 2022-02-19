@@ -9,5 +9,5 @@ int main(int argc, char *argv[])
     const QUrl url(u"qrc:/aether_explorer/main.qml"_qs);
     engine.load(url);
 
-    return app.exec();
+    return QGuiApplication::exec();
 }
