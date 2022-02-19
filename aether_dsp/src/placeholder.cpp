@@ -1,6 +1,6 @@
 #include "aether_dsp/placeholder.hpp"
 
-void foo()
+AETHER_DSP_API void foo()
 {
     // Placeholder
 }

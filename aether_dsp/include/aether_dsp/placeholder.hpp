@@ -1,1 +1,3 @@
-void foo();
+#include "aether_dsp/api.hpp"
+
+AETHER_DSP_API void foo();
