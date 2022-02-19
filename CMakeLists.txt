@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.19)
 project(
   AetherSdr
   VERSION 0.1
-  LANGUAGES CXX)
+  LANGUAGES C CXX)
 
 # Options --------------------------------------------------------------------------------
 
@@ -45,4 +45,7 @@ endif()
 add_subdirectory(aether_dsp)
 if(AETHER_BUILD_EXPLORER)
   add_subdirectory(aether_explorer)
+endif()
+if(ATHER_BUILD_EXTRAS)
+  add_subdirectory(extras)
 endif()
