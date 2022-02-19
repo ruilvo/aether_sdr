@@ -8,9 +8,9 @@ generate_export_header(
   BASE_NAME
   "aether_dsp"
   EXPORT_MACRO_NAME
-  "AETHER_DSP_EXPORT"
+  "AETHER_DSP_API"
   EXPORT_FILE_NAME
-  "include/aether_dsp/exports/export.hpp")
+  "include/aether_dsp/api/api.hpp")
 
 target_include_directories(aether_dsp PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/include"
                                              "${CMAKE_CURRENT_SOURCE_DIR}/include")
