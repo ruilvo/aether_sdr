@@ -3,7 +3,10 @@ Checks: >
   *,
   -modernize-use-trailing-return-type,
   -llvmlibc-*,
-  -fuchsia-default-arguments-calls
+  -fuchsia-default-arguments-calls,
+  -altera-struct-pack-align,
+  -altera-id-dependent-backward-branch,
+  -altera-unroll-loops
 FormatStyle: file
 CheckOptions:
   - key: readability-identifier-naming.MacroDefinitionCase
