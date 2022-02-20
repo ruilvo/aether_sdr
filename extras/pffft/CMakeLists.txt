@@ -5,7 +5,7 @@ set_target_properties(
   pffft PROPERTIES C_VISIBILITY_PRESET "default" CXX_VISIBILITY_PRESET "default"
                    VISIBILITY_INLINES_HIDDEN OFF WINDOWS_EXPORT_ALL_SYMBOLS ON)
 if(MSVC)
-  target_compile_definitions(pffft PUBLIC _USE_MATH_DEFINES)
+  target_compile_definitions(pffft PRIVATE _USE_MATH_DEFINES)
 endif()
 
 add_executable(test_pffft test_pffft.c)
