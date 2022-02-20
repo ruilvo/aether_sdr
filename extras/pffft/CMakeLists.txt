@@ -9,4 +9,10 @@ if(MSVC)
 endif()
 
 add_executable(test_pffft test_pffft.c)
+if(MSVC)
+  # `test_pffft.c` uses M_LN2 without including `<math.h>` directly. It expects `pffft.h`
+  # to include it instead. I decided to not make `_USE_MATH_DEFINES` `PUBLIC` in the
+  # target pffft because sane code should include the headers it needs directly.
+  target_compile_definitions(test_pffft PRIVATE _USE_MATH_DEFINES)
+endif()
 target_link_libraries(test_pffft pffft)
