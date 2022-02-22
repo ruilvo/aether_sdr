@@ -6,6 +6,7 @@ set_target_properties(
                    VISIBILITY_INLINES_HIDDEN OFF WINDOWS_EXPORT_ALL_SYMBOLS ON)
 if(MSVC)
   target_compile_definitions(pffft PRIVATE _USE_MATH_DEFINES)
+  set_target_properties(pffft PROPERTIES INTERPROCEDURAL_OPTIMIZATION OFF)
 endif()
 
 add_executable(test_pffft test_pffft.c)
