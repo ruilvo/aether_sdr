@@ -1,7 +1,8 @@
 add_library(aether_dsp)
 
-set_target_properties(aether_dsp PROPERTIES OUTPUT_NAME "AetherSdr")
-set_target_properties(aether_dsp PROPERTIES DEFINE_SYMBOL "AETHER_DSP_EXPORTING")
+set_target_properties(aether_dsp PROPERTIES OUTPUT_NAME "AetherSdr"
+                                            DEFINE_SYMBOL "AETHER_DSP_EXPORTING")
+target_compile_features(aether_dsp PUBLIC cxx_std_20)
 
 generate_export_header(
   aether_dsp

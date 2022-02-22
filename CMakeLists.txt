@@ -26,7 +26,6 @@ include(CheckCXXCompilerFlag)
 # Local
 include(output_structure)
 include(install_structure)
-include(cpp_options)
 include(default_visibility)
 include(compiler_flags)
 include(high_simd)
