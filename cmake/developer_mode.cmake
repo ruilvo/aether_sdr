@@ -13,9 +13,9 @@ endif()
 
 # Diagnostic flags
 if(MSVC)
-  add_compile_options("/Wall")
+  add_compile_options("/W4")
 else()
-  add_compile_options("-Wall" "-Wextra" "-pedantic -Wconversion -Wsign-conversion")
+  add_compile_options("-Wall" "-Wextra" "-pedantic" "-Wconversion" "-Wsign-conversion")
 endif()
 
 # Developer mode define
