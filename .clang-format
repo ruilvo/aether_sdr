@@ -4,6 +4,7 @@ ColumnLimit: 90
 AlignEscapedNewlines: Left
 AlignTrailingComments: false
 AllowShortBlocksOnASingleLine: Empty
+PackConstructorInitializers: CurrentLine # requires llvm >= 14
 ForEachMacros:
   - forever
   - foreach
