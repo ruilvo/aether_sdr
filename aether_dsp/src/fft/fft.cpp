@@ -6,15 +6,14 @@ namespace aether_dsp::fft
 namespace detail
 {
 
-fft_impl_t chooseFftImpl([[maybe_unused]] std::size_t size,
-                         [[maybe_unused]] Fft::direction_t direction)
+fft_impl_t chooseFftImpl(std::size_t size, Fft::direction_t direction)
 {
     // TODO: Implement this function
     return {};
 }
 
-types::fcomplex_buffer_t computeTwiddleFactors(
-    [[maybe_unused]] std::size_t size, [[maybe_unused]] Fft::direction_t direction)
+types::fcomplex_buffer_t computeTwiddleFactors(std::size_t size,
+                                               Fft::direction_t direction)
 {
     // TODO: Implement this function
     return {};
