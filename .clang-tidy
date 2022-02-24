@@ -7,7 +7,8 @@ Checks: >
   -altera-struct-pack-align,
   -altera-id-dependent-backward-branch,
   -altera-unroll-loops,
-  -fuchsia-overloaded-operator
+  -fuchsia-overloaded-operator,
+  -fuchsia-default-arguments-declarations
 FormatStyle: file
 CheckOptions:
   - key: readability-identifier-naming.MacroDefinitionCase
