@@ -1,9 +1,10 @@
 #pragma once
 
 #include "aether_dsp/api.hpp"
+#include "aether_dsp/macros.hpp"
 #include "aether_dsp/types.hpp"
 
-#include <functional>
+#include <memory>
 
 namespace aether_dsp::fft
 {
@@ -11,9 +12,14 @@ namespace aether_dsp::fft
 namespace detail
 {
 
-using fft_impl_t =
-    std::function<void(types::fcomplex_span_t input, types::fcomplex_span_t output,
-                       types::fcomplex_span_t twiddleFactors)>;
+class IFftImpl
+{
+  public:
+    AETHER_DSP_NO_COPY_MOVE(IFftImpl)
+    virtual ~IFftImpl() = default;
+
+    virtual void operator()(types::fcomplex_span_t input, types::fcomplex_span_t output);
+};
 
 } // namespace detail
 
@@ -29,10 +35,7 @@ class AETHER_DSP_API Fft
     void operator()(types::fcomplex_span_t input, types::fcomplex_span_t output);
 
   private:
-    std::size_t size_;
-    direction_t direction_;
-    detail::fft_impl_t fft_impl_;
-    types::fcomplex_buffer_t twiddle_factors_;
+    std::unique_ptr<detail::IFftImpl> fft_impl_;
 };
 
 } // namespace aether_dsp::fft
