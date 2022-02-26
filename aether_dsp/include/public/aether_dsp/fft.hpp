@@ -35,6 +35,7 @@ class AETHER_DSP_API Fft
     void operator()(types::fcomplex_span_t input, types::fcomplex_span_t output);
 
   private:
+    AETHER_DSP_SUPPRESS_C4251
     std::unique_ptr<detail::IFftImpl> fft_impl_;
 };
 
