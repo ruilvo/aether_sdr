@@ -7,7 +7,7 @@
     classname &operator=(classname &&) = delete;
 
 #if defined(_MSC_VER) && !defined(__ICL)
-#define AETHER_DSP_SUPPRESS_C4251 _Pragma("warning(suppress:4251)")
+    #define AETHER_DSP_SUPPRESS_C4251 _Pragma("warning(suppress:4251)")
 #else
-#define AETHER_DSP_SUPPRESS_C4251
+    #define AETHER_DSP_SUPPRESS_C4251
 #endif

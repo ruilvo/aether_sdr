@@ -5,6 +5,7 @@ AlignEscapedNewlines: Left
 AlignTrailingComments: false
 AllowShortBlocksOnASingleLine: Empty
 PackConstructorInitializers: CurrentLine # requires llvm >= 14
+IndentPPDirectives: BeforeHash
 ForEachMacros:
   - forever
   - foreach
