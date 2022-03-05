@@ -1,1 +1,1 @@
-target_sources(aether_dsp PRIVATE "fft.hpp" "macros.hpp" "types.hpp")
+target_sources(aether_dsp PRIVATE "fft.hpp" "macros.hpp" "types.hpp" "numbers.hpp")
