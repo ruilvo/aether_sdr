@@ -15,6 +15,7 @@ namespace detail
 class IFftImpl
 {
   public:
+    IFftImpl() = default;
     AETHER_DSP_NO_COPY_MOVE(IFftImpl)
     virtual ~IFftImpl() = default;
 

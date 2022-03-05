@@ -1,5 +1,11 @@
 #include "aether_dsp/fft.hpp"
 
+#include "aether_dsp/fft/detail/cooley_tukey.hpp"
+#include "aether_dsp/numbers.hpp"
+
+#include <cassert>
+#include <stdexcept>
+
 namespace aether_dsp::fft
 {
 
@@ -26,8 +32,11 @@ namespace detail
 std::unique_ptr<detail::IFftImpl> makeFftImpl(std::size_t size,
                                               Fft::direction_t direction)
 {
-    // TODO(ruilvo): Implement this function.
-    return {};
+    if (numbers::isPowerOfTwo(size))
+    {
+        return std::make_unique<detail::CooleyTukeyFftImpl>(size, direction);
+    }
+    throw std::invalid_argument("FFT size must be a power of two.");
 }
 
 } // namespace detail
@@ -47,6 +56,7 @@ void Fft::operator()(types::fcomplex_span_t input, types::fcomplex_span_t output
      * The overhead of the indirection should be drowned in the actual computational cost
      * of the FFT.
      */
+    assert(input.size() == output.size());
     (*fft_impl_)(input, output);
 }
 
