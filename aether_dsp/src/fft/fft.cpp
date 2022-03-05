@@ -32,6 +32,12 @@ std::unique_ptr<detail::IFftImpl> makeFftImpl(std::size_t size,
 
 } // namespace detail
 
+/**
+ * It would perhaps be interesting, in the future, to have this templated.
+ * Something like std::span where you have
+ * `template<std::size_t Extent = std::dynamic_extent>`
+ * and have the algorithm be determined constexpr'ly.
+ */
 Fft::Fft(std::size_t size, direction_t direction)
     : fft_impl_{detail::makeFftImpl(size, direction)} {};
 
