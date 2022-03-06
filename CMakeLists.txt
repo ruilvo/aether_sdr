@@ -10,9 +10,10 @@ project(
 option(BUILD_SHARED_LIBS "Build libraries as shared libraries. CMake variable name." OFF)
 option(AETHER_DEVELOPER_MODE "Enable developer helpers" OFF)
 option(AETHER_USE_LTO "Enable link-time optimization when possible" ON)
-option(AETHER_USE_FAST_MATH "Use fast math when possible (-ffast-math or /fp:fast)" ON)
+option(AETHER_USE_FAST_MATH "Use fast math when possible (-ffast-math or /fp:fast)" OFF)
 option(AETHER_USE_HIGH_SIMD
-       "Use agressive architecture options (-march=skylake or /arch:AVX2)" ON)
+       "Use agressive architecture options (-march=skylake or /arch:AVX2 only for now)"
+       OFF)
 option(AETHER_BUILD_EXPLORER "Build AetherExplorer (requires Qt>6)" OFF)
 option(ATHER_BUILD_EXTRAS "Build extra stuff (non-required external libs, etc.)" OFF)
 
