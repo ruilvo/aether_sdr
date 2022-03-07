@@ -33,8 +33,6 @@ namespace
 std::vector<types::fcomplex_buffer_t> computeForwardTwiddleFactors(
     std::size_t size, Fft::direction_t direction)
 {
-    assert(numbers::isPowerOfTwo(size));
-
     std::vector<types::fcomplex_buffer_t> twiddle_factors;
 
     const double signal = direction == Fft::direction_t::forward ? -1.0 : 1.0;
