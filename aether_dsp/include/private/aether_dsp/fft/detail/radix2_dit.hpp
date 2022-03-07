@@ -5,10 +5,10 @@
 namespace aether_dsp::fft::detail
 {
 
-class CooleyTukeyFftImpl : public IFftImpl
+class Radix2Dit : public IFftImpl
 {
   public:
-    CooleyTukeyFftImpl(std::size_t size, Fft::direction_t direction);
+    Radix2Dit(std::size_t size, Fft::direction_t direction);
     void operator()(types::fcomplex_span_t input, types::fcomplex_span_t output) override;
 };
 

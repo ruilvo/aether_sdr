@@ -19,7 +19,8 @@ class IFftImpl
     AETHER_DSP_NO_COPY_MOVE(IFftImpl)
     virtual ~IFftImpl() = default;
 
-    virtual void operator()(types::fcomplex_span_t input, types::fcomplex_span_t output);
+    virtual void operator()(types::fcomplex_span_t input,
+                            types::fcomplex_span_t output) = 0;
 };
 
 } // namespace detail

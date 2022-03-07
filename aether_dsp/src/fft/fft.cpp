@@ -1,6 +1,6 @@
 #include "aether_dsp/fft.hpp"
 
-#include "aether_dsp/fft/detail/cooley_tukey.hpp"
+#include "aether_dsp/fft/detail/radix2_dit.hpp"
 #include "aether_dsp/numbers.hpp"
 
 #include <cassert>
@@ -34,7 +34,7 @@ std::unique_ptr<detail::IFftImpl> makeFftImpl(std::size_t size,
 {
     if (numbers::isPowerOfTwo(size))
     {
-        return std::make_unique<detail::CooleyTukeyFftImpl>(size, direction);
+        return std::make_unique<detail::Radix2Dit>(size, direction);
     }
     throw std::invalid_argument("FFT size must be a power of two.");
 }
