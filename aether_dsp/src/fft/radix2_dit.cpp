@@ -13,7 +13,7 @@ namespace
 {
 
 /**
- * [1] Lyons, R; "Understanding Digital Signal Processing", fig. 4.14 (and chapter in
+ * [1] Lyons, R.; "Understanding Digital Signal Processing", fig. 4.14 (and chapter in
  * general).
  *
  * Using the optimized forms of the butterflies, it's only really necessary to compute the
