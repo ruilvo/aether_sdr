@@ -30,8 +30,8 @@ namespace
  *
  * (4-28 from [1]) W_N^{k+N/2} = -W_N^k
  */
-std::vector<types::fcomplex_buffer_t> computeForwardTwiddleFactors(
-    std::size_t size, Fft::direction_t direction)
+std::vector<types::fcomplex_buffer_t> computeTwiddleFactors(std::size_t size,
+                                                            Fft::direction_t direction)
 {
     std::vector<types::fcomplex_buffer_t> twiddle_factors;
 
@@ -59,7 +59,7 @@ Radix2Dit::Radix2Dit(std::size_t size, Fft::direction_t direction)
     : size_{size},
       direction_{direction}
 {
-    computeForwardTwiddleFactors(size_, direction_);
+    computeTwiddleFactors(size_, direction_);
 };
 
 void Radix2Dit::operator()(types::fcomplex_span_t input, types::fcomplex_span_t output)
