@@ -30,14 +30,16 @@ namespace
  *
  * (4-28 from [1]) W_N^{k+N/2} = -W_N^k
  */
-std::vector<types::fcomplex_buffer_t> computeForwardTwiddleFactors(std::size_t size)
+std::vector<types::fcomplex_buffer_t> computeForwardTwiddleFactors(
+    std::size_t size, Fft::direction_t direction)
 {
     assert(numbers::isPowerOfTwo(size));
 
     std::vector<types::fcomplex_buffer_t> twiddle_factors;
 
-    const auto two_pi_n =
-        static_cast<float>(2.0 * std::numbers::pi_v<double> * static_cast<double>(size));
+    const double signal = direction == Fft::direction_t::forward ? -1.0 : 1.0;
+    const auto two_pi_n = static_cast<float>(signal * 2.0 * std::numbers::pi_v<double> *
+                                             static_cast<double>(size));
 
     for (std::size_t i = 4; i <= size; i *= 2)
     {
@@ -59,10 +61,7 @@ Radix2Dit::Radix2Dit(std::size_t size, Fft::direction_t direction)
     : size_{size},
       direction_{direction}
 {
-    // TODO(ruilvo): Implement the backward FFT
-    assert(direction_ == Fft::direction_t::forward);
-
-    computeForwardTwiddleFactors(size_);
+    computeForwardTwiddleFactors(size_, direction_);
 };
 
 void Radix2Dit::operator()(types::fcomplex_span_t input, types::fcomplex_span_t output)
