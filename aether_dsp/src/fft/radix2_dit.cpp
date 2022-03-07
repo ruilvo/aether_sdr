@@ -17,7 +17,7 @@ namespace
  * general).
  *
  * Using the optimized forms of the butterflies, it's only really necessary to compute the
- * W_m up to m=M/2, where M is the current FFT size (2...N).
+ * W_M^k up to k=M/2, where M is the current FFT size (2...N). See equation (4-28).
  *
  * An FFT of size N has log2(N) stages. The first stage, where the radix-2 butterfly is
  * used has trivial twiddle factors (1, -1). So it's necessary to compute the twiddle
@@ -27,6 +27,8 @@ namespace
  * index 0 of the return value.
  *
  * (4-13' from [1]) W_N = exp(j*2*pi*N)
+ *
+ * (4-28 from [1]) W_N^{k+N/2} = -W_N^k
  */
 std::vector<types::fcomplex_buffer_t> computeForwardTwiddleFactors(std::size_t size)
 {
