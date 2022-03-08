@@ -21,6 +21,14 @@ endif()
 # Developer mode define
 add_compile_definitions(AETHER_DEVELOPER_MODE)
 
+# QTest for testing and benchmarking
+include(dependency_qt)
+
+# Build extras for benchmarking comparison
+set(ATHER_BUILD_EXTRAS
+    ON
+    CACHE BOOL "Build extra stuff (non-required external libs, etc.)" FORCE)
+
 # Testing
 include(CTest)
 
