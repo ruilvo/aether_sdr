@@ -4,51 +4,45 @@
 
 #include "pffft.h"
 
-TestFft::TestFft()
+#include <QDebug>
+
+void TestFft::testSize2Fft()
 {
-    const std::vector<std::size_t> sizes{2,    4,     8,     16,    32,
-                                         1024, 16384, 32786, 65536, 524288};
-    for (const auto size : sizes)
-    {
-        auto &vec = inputs_.emplace_back(size);
-        vec[0] = {1.0F, 1.0F};
-    }
+    const std::size_t size = 2;
+    aether_dsp::types::fcomplex_buffer_t input{{1.0, 0}, {1.0, 0}};
+    auto output = input; // Copy to get a vector with same shape
+
+    aether_dsp::fft::Fft ffter(size, aether_dsp::fft::Fft::forward);
+
+    ffter(input, output);
+
+    // FFT of 1+0j, 1+0j should be 2+0j, 0+0j
+    QCOMPARE(output[0], aether_dsp::types::fcomplex_t(2.0, 0.0));
+    QCOMPARE(output[1], aether_dsp::types::fcomplex_t(0.0, 0.0));
 }
 
-// For now benchmark the largest size.
-
-void TestFft::benchmarkAether()
+void TestFft::testAgainstPffft()
 {
+    const std::size_t size = 16;
+    aether_dsp::types::fcomplex_buffer_t input(size);
 
-    const auto size = inputs_.back().size();
+    input[0] = {1.0, 0.0};
 
-    auto input = inputs_.back();
-    auto output = input; // Copy to get an array of same size. Yeah lazy I know...
+    auto output_aether = input; // Copy to get a vector with same shape
 
-    auto ffter = aether_dsp::fft::Fft(size, aether_dsp::fft::Fft::direction_t::forward);
+    auto scratch_pfft = input;
+    auto output_fpfft = input;
 
-    QBENCHMARK
-    {
-        ffter(input, output);
-    }
-}
-
-void TestFft::benchmarkPffft()
-{
-    const auto size = inputs_.back().size();
-
-    auto input = inputs_.back();
-    auto X = input;
-    auto Y = input;
-    auto Z = input;
+    aether_dsp::fft::Fft ffter(size, aether_dsp::fft::Fft::forward);
+    ffter(input, output_aether);
 
     PFFFT_Setup *s = pffft_new_setup(size, PFFFT_COMPLEX);
-
-    QBENCHMARK
-    {
-        pffft_transform(s, (float *)X.data(), (float *)Y.data(), (float *)Z.data(),
-                        PFFFT_FORWARD);
-    }
-
+    pffft_transform(s, (float *)input.data(), (float *)scratch_pfft.data(),
+                    (float *)output_fpfft.data(), PFFFT_FORWARD);
     pffft_destroy_setup(s);
+
+    for (std::size_t i = 0; i < size; ++i)
+    {
+        QCOMPARE(output_aether[i], output_fpfft[i]);
+    }
 }

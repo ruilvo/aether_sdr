@@ -7,12 +7,7 @@
 class TestFft : public QObject
 {
     Q_OBJECT
-  public:
-    TestFft();
   private slots:
-    void benchmarkAether();
-    void benchmarkPffft();
-
-  private:
-    std::vector<aether_dsp::types::fcomplex_buffer_t> inputs_;
+    void testSize2Fft();
+    void testAgainstPffft();
 };
