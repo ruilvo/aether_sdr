@@ -4,11 +4,11 @@
 
 #include <QTest>
 
-class BenchmarkFft : public QObject
+class TestFft : public QObject
 {
     Q_OBJECT
   public:
-    BenchmarkFft();
+    TestFft();
   private slots:
     void benchmarkAether();
     void benchmarkPffft();

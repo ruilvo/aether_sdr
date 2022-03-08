@@ -1,10 +1,10 @@
-#include "benchmark.hpp"
+#include "test_fft.hpp"
 
 #include "aether_dsp/fft.hpp"
 
 #include "pffft.h"
 
-BenchmarkFft::BenchmarkFft()
+TestFft::TestFft()
 {
     const std::vector<std::size_t> sizes{2,    4,     8,     16,    32,
                                          1024, 16384, 32786, 65536, 524288};
@@ -17,7 +17,7 @@ BenchmarkFft::BenchmarkFft()
 
 // For now benchmark the largest size.
 
-void BenchmarkFft::benchmarkAether()
+void TestFft::benchmarkAether()
 {
 
     const auto size = inputs_.back().size();
@@ -33,7 +33,7 @@ void BenchmarkFft::benchmarkAether()
     }
 }
 
-void BenchmarkFft::benchmarkPffft()
+void TestFft::benchmarkPffft()
 {
     const auto size = inputs_.back().size();
 
@@ -46,7 +46,8 @@ void BenchmarkFft::benchmarkPffft()
 
     QBENCHMARK
     {
-        pffft_transform(s, (float *)X.data(), (float *)Y.data(), (float *)Z.data(), PFFFT_FORWARD);
+        pffft_transform(s, (float *)X.data(), (float *)Y.data(), (float *)Z.data(),
+                        PFFFT_FORWARD);
     }
 
     pffft_destroy_setup(s);
