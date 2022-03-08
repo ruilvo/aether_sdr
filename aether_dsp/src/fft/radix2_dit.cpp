@@ -2,7 +2,6 @@
 
 #include "aether_dsp/numbers.hpp"
 
-#include <algorithm>
 #include <cassert>
 #include <numbers>
 
@@ -76,8 +75,10 @@ void Radix2Dit::operator()(const types::fcomplex_span_t input,
     {
         const auto x_in = input[i];
         const auto y_in = input[half_index + 1];
+
         const auto x_prime = x_in + y_in;
         const auto y_prime = x_in - y_in;
+
         output[i] = x_prime;
         output[i + 1] = y_prime;
     }
