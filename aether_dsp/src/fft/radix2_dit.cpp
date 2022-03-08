@@ -45,8 +45,8 @@ std::vector<types::fcomplex_buffer_t> computeTwiddleFactors(std::size_t size,
 
         for (std::size_t j = 0; j < i / 2; ++j)
         {
-            twiddle_factors_m.emplace_back(
-                std::polar(1.0F, two_pi_n * static_cast<float>(j)));
+            twiddle_factors_m.emplace_back(std::polar<float>(
+                1.0F, static_cast<float>(two_pi_n * static_cast<double>(j))));
         }
     }
 
@@ -57,15 +57,46 @@ std::vector<types::fcomplex_buffer_t> computeTwiddleFactors(std::size_t size,
 
 Radix2Dit::Radix2Dit(std::size_t size, Fft::direction_t direction)
     : size_{size},
-      direction_{direction}
-{
-    computeTwiddleFactors(size_, direction_);
-};
+      direction_{direction},
+      twiddle_factors_{computeTwiddleFactors(size_, direction_)} {};
 
 void Radix2Dit::operator()(types::fcomplex_span_t input, types::fcomplex_span_t output)
 {
-    // TODO(ruilvo): actually implement the algorithm
-    std::ranges::copy(input, output.begin());
+    assert(input.size() == output.size());
+    assert(input.size() == size_);
+
+    // 1st stage: radix-2 butterfly (special case)
+    const auto half_index = size_ / 2;
+    for (std::size_t i = 0; i < size_; i += 2)
+    {
+        const auto x_in = input[i];
+        const auto y_in = input[half_index + 1];
+        const auto x_prime = x_in + y_in;
+        const auto y_prime = x_in - y_in;
+        output[i] = x_prime;
+        output[i + 1] = y_prime;
+    }
+    // Other stages
+    const auto n_stages = twiddle_factors_.size();
+    for (std::size_t i = 0; i < n_stages; i += 2)
+    {
+        const auto &current_twiddle_factors = twiddle_factors_[i];
+        const auto current_size = current_twiddle_factors.size();
+        const auto current_half_index = current_twiddle_factors.size();
+
+        for (std::size_t j = 0; j < size_ / 2; ++j)
+        {
+            const auto current_index = j * 2;
+            const auto current_twiddle_factor = current_twiddle_factors[j % current_size];
+            const auto x_in = output[current_index];
+            const auto y_wnk =
+                output[current_half_index + current_index] * current_twiddle_factor;
+            const auto x_prime = x_in + y_wnk;
+            const auto y_prime = x_in - y_wnk;
+            output[current_index] = x_prime;
+            output[current_index + 1] = y_prime;
+        }
+    }
 }
 
 } // namespace aether_dsp::fft::detail

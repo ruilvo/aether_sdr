@@ -13,9 +13,9 @@ class Radix2Dit : public IFftImpl
     void operator()(types::fcomplex_span_t input, types::fcomplex_span_t output) override;
 
   private:
-    std::size_t size_;
-    Fft::direction_t direction_;
-    std::vector<types::fcomplex_buffer_t> twiddle_factors_;
+    const std::size_t size_;
+    const Fft::direction_t direction_;
+    const std::vector<types::fcomplex_buffer_t> twiddle_factors_;
 };
 
 } // namespace aether_dsp::fft::detail
