@@ -87,21 +87,26 @@ void Radix2Dit::operator()(const types::fcomplex_span_t input,
     for (std::size_t i = 0; i < n_stages; i += 2)
     {
         const auto &twiddle_factors_m = twiddle_factors_[i];
-        const auto size_m = twiddle_factors_m.size();
-        const auto half_index_k = twiddle_factors_m.size();
+        // Optimized butterflies need half the twiddle factors
+        const auto fft_half_size_m = twiddle_factors_m.size();
+        const auto fft_size_m = fft_half_size_m * 2;
 
-        for (std::size_t j = 0; j < size_m; ++j)
+        for (std::size_t j = 0; j < size_; j += fft_size_m)
         {
-            const auto twiddle_factor_j = twiddle_factors_m[j % size_m];
+            for (std::size_t k = 0; k < fft_half_size_m; ++k)
+            {
+                const auto x_idx = j + k;
+                const auto y_idx = j + fft_half_size_m + k;
 
-            const auto x_in = output[j];
-            const auto y_wnk = output[half_index_k + j] * twiddle_factor_j;
+                const auto x_in = output[x_idx];
+                const auto y_wnk = output[y_idx] * twiddle_factors_m[k];
 
-            const auto x_prime = x_in + y_wnk;
-            const auto y_prime = x_in - y_wnk;
+                const auto x_prime = x_in + y_wnk;
+                const auto y_prime = x_in - y_wnk;
 
-            output[j] = x_prime;
-            output[half_index_k + j] = y_prime;
+                output[x_idx] = x_prime;
+                output[y_idx] = y_prime;
+            }
         }
     }
 }
