@@ -65,22 +65,18 @@ void Radix2Dit::operator()(const types::fcomplex_span_t input,
     assert(input.size() == output.size());
     assert(input.size() == size_);
 
-    /*
-     * 1st stage: radix-2 butterfly (special case)
-     * It doesn't do bit-reversal, instead moving index half_index+j into j+1 during the
-     * input/output computation.
-     */
+    // 1st stage: radix-2 butterfly (special case)
     const auto half_index = size_ / 2;
-    for (std::size_t i = 0; i < size_; i += 2)
+    for (std::size_t i = 0; i < half_index; ++i)
     {
         const auto x_in = input[i];
-        const auto y_in = input[half_index + 1];
+        const auto y_in = input[half_index + i];
 
         const auto x_prime = x_in + y_in;
         const auto y_prime = x_in - y_in;
 
-        output[i] = x_prime;
-        output[i + 1] = y_prime;
+        output[2 * i] = x_prime;
+        output[2 * i + 1] = y_prime;
     }
     // Other stages
     const auto n_stages = twiddle_factors_.size();
