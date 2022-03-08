@@ -17,3 +17,5 @@ if(MSVC)
   target_compile_definitions(test_pffft PRIVATE _USE_MATH_DEFINES)
 endif()
 target_link_libraries(test_pffft pffft)
+
+target_include_directories(pffft PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
