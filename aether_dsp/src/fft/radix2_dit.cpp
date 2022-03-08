@@ -84,7 +84,7 @@ void Radix2Dit::operator()(const types::fcomplex_span_t input,
     }
     // Other stages
     const auto n_stages = twiddle_factors_.size();
-    for (std::size_t i = 0; i < n_stages; i += 2)
+    for (std::size_t i = 0; i < n_stages; ++i)
     {
         const auto &twiddle_factors_m = twiddle_factors_[i];
         // Optimized butterflies need half the twiddle factors
