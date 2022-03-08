@@ -90,8 +90,6 @@ void Radix2Dit::operator()(const types::fcomplex_span_t input,
         const auto size_m = twiddle_factors_m.size();
         const auto half_index_k = twiddle_factors_m.size();
 
-        // size_m == size_ (N=8 FFT has 4 factors in the optimized butterfly)
-        assert(size_m == size_);
         for (std::size_t j = 0; j < size_m; ++j)
         {
             const auto twiddle_factor_j = twiddle_factors_m[j % size_m];
