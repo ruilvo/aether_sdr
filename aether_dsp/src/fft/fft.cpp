@@ -29,8 +29,8 @@ namespace detail
  * implementation.
  *
  */
-std::unique_ptr<detail::IFftImpl> makeFftImpl(std::size_t size,
-                                              Fft::direction_t direction)
+std::unique_ptr<detail::IFftImpl> makeFftImpl(const std::size_t size,
+                                              const Fft::direction_t direction)
 {
     if (numbers::isPowerOfTwo(size))
     {
@@ -47,10 +47,10 @@ std::unique_ptr<detail::IFftImpl> makeFftImpl(std::size_t size,
  * `template<std::size_t Extent = std::dynamic_extent>`
  * and have the algorithm be determined constexpr'ly.
  */
-Fft::Fft(std::size_t size, direction_t direction)
+Fft::Fft(const std::size_t size, const direction_t direction)
     : fft_impl_{detail::makeFftImpl(size, direction)} {};
 
-void Fft::operator()(types::fcomplex_span_t input, types::fcomplex_span_t output)
+void Fft::operator()(const types::fcomplex_span_t input, types::fcomplex_span_t output)
 {
     /**
      * The overhead of the indirection should be drowned in the actual computational cost
