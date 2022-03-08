@@ -30,14 +30,14 @@ namespace
  *
  * (4-28 from [1]) W_N^{k+N/2} = -W_N^k
  */
-std::vector<types::fcomplex_buffer_t> computeTwiddleFactors(std::size_t size,
-                                                            Fft::direction_t direction)
+std::vector<types::fcomplex_buffer_t> computeTwiddleFactors(
+    const std::size_t size, const Fft::direction_t direction)
 {
     std::vector<types::fcomplex_buffer_t> twiddle_factors;
 
     const double signal = direction == Fft::direction_t::forward ? -1.0 : 1.0;
-    const auto two_pi_n = static_cast<float>(signal * 2.0 * std::numbers::pi_v<double> *
-                                             static_cast<double>(size));
+    const auto two_pi_n =
+        static_cast<float>(signal * 2.0 * std::numbers::pi * static_cast<double>(size));
 
     for (std::size_t i = 4; i <= size; i *= 2)
     {
@@ -55,12 +55,13 @@ std::vector<types::fcomplex_buffer_t> computeTwiddleFactors(std::size_t size,
 
 } // namespace
 
-Radix2Dit::Radix2Dit(std::size_t size, Fft::direction_t direction)
+Radix2Dit::Radix2Dit(const std::size_t size, const Fft::direction_t direction)
     : size_{size},
       direction_{direction},
       twiddle_factors_{computeTwiddleFactors(size_, direction_)} {};
 
-void Radix2Dit::operator()(types::fcomplex_span_t input, types::fcomplex_span_t output)
+void Radix2Dit::operator()(const types::fcomplex_span_t input,
+                           types::fcomplex_span_t output)
 {
     assert(input.size() == output.size());
     assert(input.size() == size_);
@@ -80,21 +81,24 @@ void Radix2Dit::operator()(types::fcomplex_span_t input, types::fcomplex_span_t 
     const auto n_stages = twiddle_factors_.size();
     for (std::size_t i = 0; i < n_stages; i += 2)
     {
-        const auto &current_twiddle_factors = twiddle_factors_[i];
-        const auto current_size = current_twiddle_factors.size();
-        const auto current_half_index = current_twiddle_factors.size();
+        const auto &twiddle_factors_m = twiddle_factors_[i];
+        const auto size_m = twiddle_factors_m.size();
+        const auto half_index_k = twiddle_factors_m.size();
 
-        for (std::size_t j = 0; j < size_ / 2; ++j)
+        // size_m == size_ (N=8 FFT has 4 factors in the optimized butterfly)
+        assert(size_m == size_);
+        for (std::size_t j = 0; j < size_m; ++j)
         {
-            const auto current_index = j * 2;
-            const auto current_twiddle_factor = current_twiddle_factors[j % current_size];
-            const auto x_in = output[current_index];
-            const auto y_wnk =
-                output[current_half_index + current_index] * current_twiddle_factor;
+            const auto twiddle_factor_j = twiddle_factors_m[j % size_m];
+
+            const auto x_in = output[j];
+            const auto y_wnk = output[half_index_k + j] * twiddle_factor_j;
+
             const auto x_prime = x_in + y_wnk;
             const auto y_prime = x_in - y_wnk;
-            output[current_index] = x_prime;
-            output[current_index + 1] = y_prime;
+
+            output[j] = x_prime;
+            output[half_index_k + j] = y_prime;
         }
     }
 }
