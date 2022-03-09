@@ -29,10 +29,10 @@ namespace
  *
  * (4-28 from [1]) W_N^{k+N/2} = -W_N^k
  */
-std::vector<types::fcomplex_buffer_t> computeTwiddleFactors(
+std::vector<std::vector<std::complex<float>>> computeTwiddleFactors(
     const std::size_t size, const Fft::direction_t direction)
 {
-    std::vector<types::fcomplex_buffer_t> twiddle_factors;
+    std::vector<std::vector<std::complex<float>>> twiddle_factors;
 
     const double signal = direction == Fft::direction_t::forward ? -1.0 : 1.0;
     const auto two_pi_n =
@@ -59,8 +59,8 @@ Radix2Dit::Radix2Dit(const std::size_t size, const Fft::direction_t direction)
       direction_{direction},
       twiddle_factors_{computeTwiddleFactors(size_, direction_)} {};
 
-void Radix2Dit::operator()(const types::fcomplex_span_t input,
-                           types::fcomplex_span_t output)
+void Radix2Dit::operator()(std::span<const std::complex<float>> input,
+                           std::span<std::complex<float>> output)
 {
     assert(input.size() == output.size());
     assert(input.size() == size_);

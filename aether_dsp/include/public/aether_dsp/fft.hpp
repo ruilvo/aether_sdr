@@ -19,8 +19,8 @@ class IFftImpl
     AETHER_DSP_NO_COPY_MOVE(IFftImpl)
     virtual ~IFftImpl() = default;
 
-    virtual void operator()(types::fcomplex_span_t input,
-                            types::fcomplex_span_t output) = 0;
+    virtual void operator()(std::span<const std::complex<float>> input,
+                            std::span<std::complex<float>> output) = 0;
 };
 
 } // namespace detail
@@ -34,7 +34,8 @@ class AETHER_DSP_API Fft
         inverse
     };
     explicit Fft(std::size_t size, direction_t direction = forward);
-    void operator()(types::fcomplex_span_t input, types::fcomplex_span_t output);
+    void operator()(std::span<const std::complex<float>> input,
+                    std::span<std::complex<float>> output);
 
   private:
     AETHER_DSP_SUPPRESS_C4251

@@ -50,7 +50,8 @@ std::unique_ptr<detail::IFftImpl> makeFftImpl(const std::size_t size,
 Fft::Fft(const std::size_t size, const direction_t direction)
     : fft_impl_{detail::makeFftImpl(size, direction)} {};
 
-void Fft::operator()(const types::fcomplex_span_t input, types::fcomplex_span_t output)
+void Fft::operator()(std::span<const std::complex<float>> input,
+                     std::span<std::complex<float>> output)
 {
     /**
      * The overhead of the indirection should be drowned in the actual computational cost
