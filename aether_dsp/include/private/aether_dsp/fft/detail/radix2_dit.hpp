@@ -17,6 +17,7 @@ class Radix2Dit : public IFftImpl
     const std::size_t size_;
     const Fft::direction_t direction_;
     const std::vector<std::vector<std::complex<float>>> twiddle_factors_;
+    const std::vector<std::size_t> reversed_bit_order_indices_;
 };
 
 } // namespace aether_dsp::fft::detail

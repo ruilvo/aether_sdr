@@ -2,6 +2,7 @@
 
 #include "aether_dsp/numbers.hpp"
 
+#include <bit>
 #include <cassert>
 #include <numbers>
 
@@ -52,12 +53,25 @@ std::vector<std::vector<std::complex<float>>> computeTwiddleFactors(
     return twiddle_factors;
 }
 
+std::vector<std::size_t> computeReversedBitOrderIndices(const std::size_t size)
+{
+    std::vector<std::size_t> reversed_bit_order_indices;
+
+    for (std::size_t i = 0; i < size; ++i)
+    {
+        reversed_bit_order_indices.emplace_back(numbers::reverseBits(i, size - 1ULL));
+    }
+
+    return reversed_bit_order_indices;
+}
+
 } // namespace
 
 Radix2Dit::Radix2Dit(const std::size_t size, const Fft::direction_t direction)
     : size_{size},
       direction_{direction},
-      twiddle_factors_{computeTwiddleFactors(size_, direction_)} {};
+      twiddle_factors_{computeTwiddleFactors(size_, direction_)},
+      reversed_bit_order_indices_{computeReversedBitOrderIndices(size_)} {};
 
 void Radix2Dit::operator()(std::span<const std::complex<float>> input,
                            std::span<std::complex<float>> output)
@@ -66,17 +80,19 @@ void Radix2Dit::operator()(std::span<const std::complex<float>> input,
     assert(input.size() == size_);
 
     // 1st stage: radix-2 butterfly (special case)
-    const auto half_index = size_ / 2;
-    for (std::size_t i = 0; i < half_index; ++i)
+    for (std::size_t i = 0; i < size_; i += 2)
     {
-        const auto x_in = input[i];
-        const auto y_in = input[half_index + i];
+        const auto x_idx = reversed_bit_order_indices_[i];
+        const auto y_idx = reversed_bit_order_indices_[i + 1];
+
+        const auto x_in = input[x_idx];
+        const auto y_in = input[y_idx];
 
         const auto x_prime = x_in + y_in;
         const auto y_prime = x_in - y_in;
 
-        output[2 * i] = x_prime;
-        output[2 * i + 1] = y_prime;
+        output[i] = x_prime;
+        output[i + 1] = y_prime;
     }
     // Other stages
     const auto n_stages = twiddle_factors_.size();
