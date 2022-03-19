@@ -1,3 +1,6 @@
 add_subdirectory(include)
 add_subdirectory(src)
-add_subdirectory(tests)
+
+if(AETHER_DEVELOPER_MODE)
+  add_subdirectory(tests)
+endif()

@@ -1,1 +1,1 @@
-target_sources(aether_dsp PRIVATE number.hpp)
+target_sources(aether_dsp PRIVATE numbers.hpp)
