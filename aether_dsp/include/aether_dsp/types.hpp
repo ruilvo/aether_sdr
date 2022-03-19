@@ -2,10 +2,13 @@
 
 #include <complex>
 #include <cstddef>
+#include <cstdint>
 #include <span>
 #include <vector>
 
-namespace aether_dsp::types
+// https://stackoverflow.com/a/22346651
+// NOLINTNEXTLINE(google-runtime-int)
+constexpr std::size_t operator"" _sz(unsigned long long value) noexcept
 {
-
-} // namespace aether_dsp::types
+    return static_cast<std::size_t>(value);
+}
