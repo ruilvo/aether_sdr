@@ -9,7 +9,7 @@
 namespace aether_dsp::fft
 {
 
-namespace detail
+namespace impl
 {
 
 class IFftImpl
@@ -23,7 +23,7 @@ class IFftImpl
                             std::span<std::complex<float>> output) = 0;
 };
 
-} // namespace detail
+} // namespace impl
 
 class AETHER_DSP_API Fft
 {
@@ -39,7 +39,7 @@ class AETHER_DSP_API Fft
 
   private:
     AETHER_DSP_SUPPRESS_C4251
-    std::unique_ptr<detail::IFftImpl> fft_impl_;
+    std::unique_ptr<impl::IFftImpl> fft_impl_;
 };
 
 } // namespace aether_dsp::fft

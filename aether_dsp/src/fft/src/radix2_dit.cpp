@@ -1,4 +1,4 @@
-#include "aether_dsp/fft/detail/radix2_dit.hpp"
+#include "aether_dsp/fft/radix2_dit.hpp"
 
 #include "aether_dsp/numbers.hpp"
 
@@ -6,10 +6,10 @@
 #include <cassert>
 #include <numbers>
 
-namespace aether_dsp::fft::detail
+namespace aether_dsp::fft::impl
 {
 
-namespace
+namespace radix2_dit
 {
 
 /**
@@ -41,12 +41,12 @@ std::vector<std::vector<std::complex<float>>> computeTwiddleFactors(
 
     for (std::size_t i = 4; i <= size; i *= 2)
     {
-        auto &twiddle_factors_m = twiddle_factors.emplace_back();
+        auto &twiddle_factors_m = twiddle_factors.emplace_back(i / 2);
 
         for (std::size_t j = 0; j < i / 2; ++j)
         {
-            twiddle_factors_m.emplace_back(std::polar<float>(
-                1.0F, static_cast<float>(two_pi_n * static_cast<double>(j))));
+            twiddle_factors_m[j] = std::polar<float>(
+                1.0F, static_cast<float>(two_pi_n * static_cast<double>(j)));
         }
     }
 
@@ -55,23 +55,23 @@ std::vector<std::vector<std::complex<float>>> computeTwiddleFactors(
 
 std::vector<std::size_t> computeReversedBitOrderIndices(const std::size_t size)
 {
-    std::vector<std::size_t> reversed_bit_order_indices;
+    std::vector<std::size_t> reversed_bit_order_indices(size);
 
     for (std::size_t i = 0; i < size; ++i)
     {
-        reversed_bit_order_indices.emplace_back(numbers::reverseBits(i, size - 1_sz));
+        reversed_bit_order_indices[i] = numbers::reverseBits(i, size - 1_sz);
     }
 
     return reversed_bit_order_indices;
 }
 
-} // namespace
+} // namespace radix2_dit
 
 Radix2Dit::Radix2Dit(const std::size_t size, const Fft::direction_t direction)
     : size_{size},
       direction_{direction},
-      twiddle_factors_{computeTwiddleFactors(size_, direction_)},
-      reversed_bit_order_indices_{computeReversedBitOrderIndices(size_)} {};
+      twiddle_factors_{radix2_dit::computeTwiddleFactors(size_, direction_)},
+      reversed_bit_order_indices_{radix2_dit::computeReversedBitOrderIndices(size_)} {};
 
 void Radix2Dit::operator()(std::span<const std::complex<float>> input,
                            std::span<std::complex<float>> output)
@@ -123,4 +123,4 @@ void Radix2Dit::operator()(std::span<const std::complex<float>> input,
     }
 }
 
-} // namespace aether_dsp::fft::detail
+} // namespace aether_dsp::fft::impl

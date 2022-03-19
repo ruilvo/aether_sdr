@@ -1,6 +1,6 @@
 #include "aether_dsp/fft.hpp"
 
-#include "aether_dsp/fft/detail/radix2_dit.hpp"
+#include "aether_dsp/fft/radix2_dit.hpp"
 #include "aether_dsp/numbers.hpp"
 
 #include <cassert>
@@ -9,7 +9,7 @@
 namespace aether_dsp::fft
 {
 
-namespace detail
+namespace impl
 {
 
 /**
@@ -25,21 +25,21 @@ namespace detail
  *
  * @param size The size of the FFT.
  * @param direction The direction of the FFT.
- * @return std::unique_ptr<detail::IFftImpl> A polymorphic object containing the required
+ * @return std::unique_ptr<impl::IFftImpl> A polymorphic object containing the required
  * implementation.
  *
  */
-std::unique_ptr<detail::IFftImpl> makeFftImpl(const std::size_t size,
-                                              const Fft::direction_t direction)
+std::unique_ptr<impl::IFftImpl> makeFftImpl(const std::size_t size,
+                                            const Fft::direction_t direction)
 {
     if (numbers::isPowerOfTwo(size))
     {
-        return std::make_unique<detail::Radix2Dit>(size, direction);
+        return std::make_unique<impl::Radix2Dit>(size, direction);
     }
     throw std::invalid_argument("FFT size must be a power of two.");
 }
 
-} // namespace detail
+} // namespace impl
 
 /**
  * It would perhaps be interesting, in the future, to have this templated.
@@ -48,7 +48,7 @@ std::unique_ptr<detail::IFftImpl> makeFftImpl(const std::size_t size,
  * and have the algorithm be determined constexpr'ly.
  */
 Fft::Fft(const std::size_t size, const direction_t direction)
-    : fft_impl_{detail::makeFftImpl(size, direction)} {};
+    : fft_impl_{impl::makeFftImpl(size, direction)} {};
 
 void Fft::operator()(std::span<const std::complex<float>> input,
                      std::span<std::complex<float>> output)

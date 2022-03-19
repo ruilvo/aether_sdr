@@ -3,7 +3,7 @@
 #include "aether_dsp/fft.hpp"
 #include "aether_dsp/types.hpp"
 
-namespace aether_dsp::fft::detail
+namespace aether_dsp::fft::impl
 {
 
 class Radix2Dit : public IFftImpl
@@ -20,4 +20,4 @@ class Radix2Dit : public IFftImpl
     const std::vector<std::size_t> reversed_bit_order_indices_;
 };
 
-} // namespace aether_dsp::fft::detail
+} // namespace aether_dsp::fft::impl

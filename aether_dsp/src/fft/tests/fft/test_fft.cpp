@@ -44,6 +44,9 @@ void TestFft::testAgainstPffft()
 
     for (std::size_t i = 0; i < size; ++i)
     {
+        qDebug() << "aether_dsp: (" << output_aether[i].real() << ", "
+                 << output_aether[i].imag() << "); pffft: (" << output_fpfft[i].real()
+                 << ", " << output_fpfft[i].imag() << ")";
         QCOMPARE(output_aether[i], output_fpfft[i]);
     }
 }
