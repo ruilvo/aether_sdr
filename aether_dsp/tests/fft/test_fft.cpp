@@ -10,15 +10,16 @@ void TestFft::testSize2Fft()
 {
     const std::size_t size = 2;
     const std::vector<std::complex<float>> input{{1.0, 0}, {1.0, 0}};
+    const std::vector<std::complex<float>> result{{2.0, 0}, {0.0, 0}};
+
     auto output = input; // Copy to get a vector with same shape
 
     aether_dsp::fft::Fft ffter(size, aether_dsp::fft::Fft::forward);
-
     ffter(input, output);
 
     // FFT of 1+0j, 1+0j should be 2+0j, 0+0j
-    QCOMPARE(output[0], std::complex<float>(2.0, 0.0));
-    QCOMPARE(output[1], std::complex<float>(0.0, 0.0));
+    QCOMPARE(output[0], result[0]);
+    QCOMPARE(output[1], result[1]);
 }
 
 void TestFft::testAgainstPffft()
