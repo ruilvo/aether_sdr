@@ -14,9 +14,8 @@ option(
   OFF)
 option(AETHER_USE_LTO "Enable link-time optimization when possible" ON)
 option(AETHER_USE_FAST_MATH "Use fast math when possible (-ffast-math or /fp:fast)" OFF)
-option(AETHER_USE_HIGH_SIMD
-       "Use agressive architecture options (-march=skylake or /arch:AVX2 only for now)"
-       OFF)
+option(AETHER_USE_X86_HIGH_SIMD
+       "Use agressive x86 architecture options (-march=skylake or /arch:AVX2)" OFF)
 option(AETHER_BUILD_EXPLORER "Build AetherExplorer (requires Qt>6)" OFF)
 option(ATHER_BUILD_EXTRAS "Build extra stuff (non-required external libs, etc.)" OFF)
 

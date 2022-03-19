@@ -1,6 +1,6 @@
 include_guard(GLOBAL)
 
-if(NOT AETHER_USE_HIGH_SIMD)
+if(NOT AETHER_USE_X86_HIGH_SIMD)
   return()
 endif()
 
