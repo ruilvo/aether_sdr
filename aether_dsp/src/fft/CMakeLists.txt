@@ -1,1 +1,3 @@
-target_sources(aether_dsp PRIVATE "fft.cpp" "radix2_dit.cpp")
+add_subdirectory(include)
+add_subdirectory(src)
+add_subdirectory(tests)
