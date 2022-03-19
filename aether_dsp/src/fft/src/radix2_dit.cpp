@@ -59,7 +59,7 @@ std::vector<std::size_t> computeReversedBitOrderIndices(const std::size_t size)
 
     for (std::size_t i = 0; i < size; ++i)
     {
-        reversed_bit_order_indices.emplace_back(numbers::reverseBits(i, size - 1ULL));
+        reversed_bit_order_indices.emplace_back(numbers::reverseBits(i, size - 1_sz));
     }
 
     return reversed_bit_order_indices;
