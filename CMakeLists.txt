@@ -22,6 +22,15 @@ option(AETHER_USE_FAST_MATH "Use fast math when possible (-ffast-math or /fp:fas
 option(AETHER_USE_X86_HIGH_SIMD
        "Use agressive x86 architecture options (-march=skylake or /arch:AVX2)" OFF)
 option(AETHER_BUILD_EXPLORER "Build AetherExplorer (requires Qt>6)" OFF)
+cmake_dependent_option(
+  AETHER_BUILD_EXTRAS
+  "Build extra stuff (non-required external libs, etc.)"
+  OFF
+  # If AETHER_DEVELOPER_MODE is ON, then AETHER_BUILD_EXTRAS must be ON.
+  # The CMake API used a negated option value, so when `NOT NOT AETHER_DEVELOPER_MODE`
+  # we force AETHER_BUILD_EXTRAS to be ON.
+  "NOT AETHER_DEVELOPER_MODE"
+  ON)
 option(AETHER_USE_ISO_FLAGS "Add extra compiler flags to make compilers more compliant"
        ON)
 
@@ -51,6 +60,6 @@ add_subdirectory(aether_dsp)
 if(AETHER_BUILD_EXPLORER)
   add_subdirectory(aether_explorer)
 endif()
-if(ATHER_BUILD_EXTRAS)
+if(AETHER_BUILD_EXTRAS)
   add_subdirectory(extras)
 endif()
