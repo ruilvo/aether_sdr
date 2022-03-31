@@ -1,5 +1,7 @@
 #include "aether_dsp/numbers.hpp"
 
+#include <bit>
+
 namespace aether_dsp::numbers
 {
 

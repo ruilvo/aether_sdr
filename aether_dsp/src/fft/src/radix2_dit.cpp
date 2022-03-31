@@ -2,7 +2,6 @@
 
 #include "aether_dsp/numbers.hpp"
 
-#include <bit>
 #include <cassert>
 #include <numbers>
 
