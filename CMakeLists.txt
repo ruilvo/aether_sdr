@@ -15,7 +15,7 @@ include(CheckCXXCompilerFlag)
 option(BUILD_SHARED_LIBS "Build libraries as shared libraries. CMake variable name." OFF)
 option(
   AETHER_DEVELOPER_MODE
-  "Enable developer helpers. Requires Qt>6 for and ATHER_BUILD_EXTRAS for tests/benchmarks."
+  "Enable developer helpers. Requires Qt>6 for and AETHER_BUILD_EXTRAS for tests/benchmarks."
   OFF)
 option(AETHER_USE_LTO "Enable link-time optimization when possible" ON)
 option(AETHER_USE_FAST_MATH "Use fast math when possible (-ffast-math or /fp:fast)" OFF)
@@ -36,6 +36,7 @@ option(AETHER_USE_ISO_FLAGS "Add extra compiler flags to make compilers more com
 
 # ----------------------------------------------------------------------------------------
 
+# Local modules
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 include(output_structure)
