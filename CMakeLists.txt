@@ -5,6 +5,11 @@ project(
   VERSION 0.1
   LANGUAGES C CXX)
 
+# CMake modules
+include(CMakeDependentOption)
+include(GenerateExportHeader)
+include(CheckCXXCompilerFlag)
+
 # Options --------------------------------------------------------------------------------
 
 option(BUILD_SHARED_LIBS "Build libraries as shared libraries. CMake variable name." OFF)
@@ -24,10 +29,6 @@ option(AETHER_USE_ISO_FLAGS "Add extra compiler flags to make compilers more com
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
-# CMake
-include(GenerateExportHeader)
-include(CheckCXXCompilerFlag)
-# Local
 include(output_structure)
 include(install_structure)
 include(default_visibility)
