@@ -3,6 +3,7 @@ target_sources(
   PRIVATE # Misc
           macros.hpp
           types.hpp
+          literals.hpp
           #Numbers
           numbers.hpp
           #FFT
