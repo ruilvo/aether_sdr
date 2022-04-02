@@ -8,3 +8,5 @@ target_sources(
           numbers.hpp
           #FFT
           fft.hpp)
+
+add_subdirectory(fft)
