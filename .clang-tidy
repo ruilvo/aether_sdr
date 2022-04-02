@@ -3,12 +3,13 @@ Checks: >
   *,
   -modernize-use-trailing-return-type,
   -llvmlibc-*,
-  -fuchsia-default-arguments-calls,
   -altera-struct-pack-align,
   -altera-id-dependent-backward-branch,
   -altera-unroll-loops,
   -fuchsia-overloaded-operator,
-  -fuchsia-default-arguments-declarations
+  -fuchsia-default-arguments-declarations,
+  -fuchsia-default-arguments-calls,
+  -google-runtime-int
 FormatStyle: file
 CheckOptions:
   - key: readability-identifier-naming.MacroDefinitionCase
