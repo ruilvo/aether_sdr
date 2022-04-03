@@ -29,7 +29,7 @@ class Fft
 {
   public:
     Fft() = delete;
-    explicit Fft(std::size_t size, direction_t direction);
+    Fft(std::size_t size, direction_t direction);
     // To make clang-tidy happy because of the explicitely declared destructor.
     Fft(const Fft &) = delete;
     Fft &operator=(const Fft &) = delete;

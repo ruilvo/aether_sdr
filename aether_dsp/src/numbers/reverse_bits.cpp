@@ -6,14 +6,15 @@
 namespace aether_dsp::numbers
 {
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 AETHER_DSP_API std::size_t reverseBits(std::size_t value, std::size_t maximum_value)
 {
-    using namespace aether_dsp::literals;
+    using aether_dsp::literals::operator""_sz;
 
     std::size_t result{};
 
     // irc://irc.libera.chat/c++-general
-    // https://godbolt.org/z/5E6jazK87
+    // https://godbolt.org/z/oxj1qMjhd
     // https://godbolt.org/z/nG8G61afe for a crazy look-up table
     // Thanks PJBoy!
 
