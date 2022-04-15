@@ -5,8 +5,4 @@ target_sources(
           types.hpp
           literals.hpp
           #Numbers
-          numbers.hpp
-          #FFT
-          fft.hpp)
-
-add_subdirectory(fft)
+          numbers.hpp)
