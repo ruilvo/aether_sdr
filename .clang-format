@@ -1,6 +1,6 @@
 ---
 BasedOnStyle: Microsoft
-ColumnLimit: 90
+ColumnLimit: 100
 AlignEscapedNewlines: Left
 AlignTrailingComments: false
 AllowShortBlocksOnASingleLine: Empty
