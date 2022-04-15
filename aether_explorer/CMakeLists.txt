@@ -1,3 +1,7 @@
+if(NOT AETHER_BUILD_EXPLORER)
+  return()
+endif()
+
 qt_add_executable(aether_explorer main.cpp)
 set_target_properties(aether_explorer PROPERTIES OUTPUT_NAME "AetherExplorer")
 

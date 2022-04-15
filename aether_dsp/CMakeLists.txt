@@ -1,13 +1,17 @@
+if(NOT AETHER_BUILD_DSP)
+  return()
+endif()
+
 add_library(aether_dsp)
 
-set_target_properties(aether_dsp PROPERTIES OUTPUT_NAME "AetherSdr"
-                                            DEFINE_SYMBOL "AETHER_DSP_EXPORTING")
+set_target_properties(aether_dsp PROPERTIES OUTPUT_NAME "AetherSdr" DEFINE_SYMBOL
+                                                                    "AETHER_DSP_EXPORTING")
 target_compile_features(aether_dsp PUBLIC cxx_std_20)
 
 generate_export_header(
   aether_dsp
   BASE_NAME
-  "aether_dsp"
+  "AETHER_DSP"
   EXPORT_MACRO_NAME
   "AETHER_DSP_API"
   EXPORT_FILE_NAME

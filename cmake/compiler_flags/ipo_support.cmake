@@ -4,7 +4,6 @@ if(NOT AETHER_USE_LTO)
   return()
 endif()
 
-include(CheckIPOSupported)
 check_ipo_supported(RESULT IPO_SUPPORTED OUTPUT LTO_ERROR)
 if(IPO_SUPPORTED)
   message(STATUS "IPO / LTO enabled")

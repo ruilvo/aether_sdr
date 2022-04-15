@@ -11,6 +11,10 @@ if(MSVC)
   target_compile_options(pffft PRIVATE "/wd4244" "/wd4456" "/wd4244")
 endif()
 
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 add_executable(test_pffft test_pffft.c)
 if(MSVC)
   # "test_pffft.c" uses M_LN2 without including `<math.h>` directly. It expects `pffft.h`
@@ -20,3 +24,5 @@ if(MSVC)
   target_compile_options(test_pffft PRIVATE "/wd4244" "/wd4456" "/wd4244")
 endif()
 target_link_libraries(test_pffft pffft)
+
+add_test(NAME "PFFFT VS FFTPack" COMMAND test_pffft)
